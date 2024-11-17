@@ -1,11 +1,23 @@
+import { ApolloServer, gql } from 'apollo-server-express'
 import express from 'express'
+
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!'
+  }
+}
+
+const server = new ApolloServer({ typeDefs, resolvers })
+
 const app = express()
-const port = 3000
+server.applyMiddleware({ app })
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+)
