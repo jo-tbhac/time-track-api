@@ -1,17 +1,11 @@
-import { ApolloServer, gql } from 'apollo-server-express'
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
+import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`
+import { resolvers } from '@/resolvers'
 
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  }
-}
+const typeDefs = await readFile(path.resolve(import.meta.dirname, 'schema.graphql'), 'utf8')
 
 const server = new ApolloServer({ typeDefs, resolvers })
 
