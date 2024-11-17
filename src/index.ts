@@ -16,6 +16,8 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers })
 
 const app = express()
+
+await server.start()
 server.applyMiddleware({ app })
 
 app.listen({ port: 4000 }, () =>
