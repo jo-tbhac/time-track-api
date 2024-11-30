@@ -8,17 +8,29 @@ datasource db {
 }
 
 model Job {
-  id         Int    @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  hourlyWage Int    @map("hourly_wage")
+  hourlyWage Int       @map("hourly_wage")
+  UserJob    UserJob[]
 
   @@map("jobs")
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+  id      Int       @id @default(autoincrement())
+  name    String
+  email   String    @unique
+  UserJob UserJob[]
 
   @@map("users")
+}
+
+model UserJob {
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int  @map("user_id")
+  job    Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId  Int  @map("job_id")
+
+  @@id([userId, jobId])
+  @@map("user_jobs")
 }
