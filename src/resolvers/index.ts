@@ -5,7 +5,7 @@ export const resolvers = {
     jobs: () => {
       return findJobs()
     },
-    job: (_, { input: { id } }) => {
+    job: (_, { id }) => {
       return findJob(id)
     }
   },
