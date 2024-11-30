@@ -4,6 +4,12 @@ type Job {
   hourlyWage: Int
 }
 
+type User {
+  id: Int!
+  name: String!
+  email: String!
+}
+
 type Query {
   jobs: [Job!]
   job(id: Int!): Job
@@ -11,9 +17,15 @@ type Query {
 
 type Mutation {
   createJob(input: CreateJobInput): Job
+  createUser(input: CreateUserInput): User
 }
 
 input CreateJobInput {
   name: String!
   hourlyWage: Int!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
 }
